@@ -23,11 +23,11 @@
 
 You will need at least 20 GB of available space. 
 
-> File drop-down menu -> Preferences... -> General -> ...
+`File drop-down menu` -> `Preferences...` -> `General` -> `Default Machine Folder:   D:\VM machines\my_rhel_disk_space` -> `Ok button`
 
->   Default Machine Folder:   D:\VM machines\my_rhel_disk_space
+3. Create a new VM
 
-> ... -> Ok button
+
 
 
 ## 3. BOOT THE VM USING THE ISO FILE 
