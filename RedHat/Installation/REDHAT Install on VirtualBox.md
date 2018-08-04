@@ -17,9 +17,11 @@
 
 ## 2. CONFIGURE VM TO RUN RHEL
 
-1. Launch VirtualBox from your system’s menu.
+**1. Launch VirtualBox**
 
-2. Define where VirtualBox stores the files that are used as virtual hard disks for the VMs you create.
+**2. Define VM storage**
+
+Define where VirtualBox stores the files that are used as virtual hard disks for the VMs you create.
 
 You will need at least 20 GB of available space. 
 
@@ -29,7 +31,17 @@ You will need at least 20 GB of available space.
 
 -> `Ok button`
 
-3. Create a new VM
+
+**3. Create a new VM**
+
+`New button` -> 
+
+`Name:  my_rhel_6.5`
+`Type:  Linux`
+`Version: Red Hat (64-bit)`
+
+-> `Next button` -> 
+
 
 
 
