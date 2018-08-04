@@ -71,13 +71,20 @@ Drag'n'Drop:      Bidirectional
 -> *System* -> *Processor* tab -> Set necessary configuration for CPU -> *Network* -> *Adapter 1* tab -> 
 
 ```
-#"NAT"
-This is the easiest to manage and will be fine for many uses. Using NAT, the VM will be able to access resources on your network or the Internet. However services, such as a web server, running inside the VM won’t be directly accessible from outside of the VM.
+      #"NAT"
+      This is the easiest to manage and will be fine for many uses. 
+      Using NAT, the VM will be able to access resources on your network or the Internet. 
+      However services, such as a web server, running inside the VM won’t be directly accessible from outside of the VM.
 
-#"Bridged Adapter"
-In this configuration, the VM gets its own IP address, usually using your network’s DHCP server. The VM appears on the network the same way a physical computer would with its own hardware MAC address. The host’s network adapter is shared by a device driver that is installed by VirtualBox. The VM’s virtual network adapter can only be bridged to one physical network adapter at a time. If your system has more than one network adapter you need to choose which one to attach to. If your system switches between wired and wireless connections, you will need to switch bridged adapters for the VM.
+      #"Bridged Adapter"
+      In this configuration, the VM gets its own IP address, usually using your network’s DHCP server. 
+      The VM appears on the network the same way a physical computer would with its own hardware MAC address. 
+      The host’s network adapter is shared by a device driver that is installed by VirtualBox. 
+      The VM’s virtual network adapter can only be bridged to one physical network adapter at a time. 
+      If your system has more than one network adapter you need to choose which one to attach to. 
+      If your system switches between wired and wireless connections, you will need to switch bridged adapters for the VM.
 
-Attached to: Bridged Adapter    <== "Bridged Adapter" to attach the VM directly to the physical network
+Attached to: Bridged Adapter
 ```
 
 -> *Storage* -> Highlight *Empty* under *Controller: IDE* -> On the right click the CD icon -> *Choose Virtual Optical Disk File* -> Choose previously downloaded RHEL `.iso` DVD file -> *OK* button
@@ -101,28 +108,39 @@ Install Red Hat Enterprise Linux 7.4
 
 -> *Enter* button -> Select your preferred language and keyboard layout to use during installation -> 
 
-*Software selection* -> Choose necessary one (with GUI, for example) -> *Done* button -> 
+-> *Software selection* -> Choose necessary one (with GUI, for example) -> *Done* button -> 
 
-*Installation destination* -> *sda* is checked (this is a disk we created previously) -> *Done* button -> 
+-> *Installation destination* -> *sda* is checked (this is a disk we created previously) -> *Done* button -> 
 
-*Network & host name* -> on/off necessary one -> Define desired *Host Name* -> *Done* button -> 
+-> *Network & host name* -> on/off necessary one -> Define desired *Host Name* -> *Done* button -> 
 
-*KDUMP* -> *Enable kdump* checkbox is not checked -> *Done* button -> 
+-> *KDUMP* -> *Enable kdump* checkbox is not checked -> *Done* button -> 
 
-*Begin installation* button -> 
+-> *Begin installation* button -> 
 
-Set root password -> Create at least 1 user -> 
+-> Set root password -> Create at least 1 user -> 
 
-*Reboot* button
+-> *Reboot* button
 
 
 ## 4. POST-INSTALLATION STEPS
 
+During the first boot of the system, you will be asked to accept the license agreement and register the system with Red Hat Subscription Management. Completing these steps are required for your system to download software from Red Hat.
 
+*License information* -> *I accept the license agreement* checkbox is selected -> *Done* button -> 
 
+-> *Subscription Manager* -> Leave *I will register with* set to the default -> *Next* button -> 
 
+```
+      #This is Red Hat credentials you have used during registration
+      
+Login:      propalparolnapervom
+Password:
+```
 
+-> *Register* button -> It might be that you'll be asked to accept terms. Just log to [main site](https://www.redhat.com/wapps/tns) and accept terms that you see just after login process is finished -> *Register* button -> On the next screen you will be shown the list of subscriptions that are available to your user ID. If you have more than one subscription available, select which subscription to attach this system to -> *Attach* button -> *Done* button -> *Finish configuration* button
 
+Log in to the system with the username and password you created during installation -> Make offered configurations -> *Start using you Red Hat Enterprise Linux Server* button
 
 
 
