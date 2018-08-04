@@ -1,4 +1,4 @@
-# REDHAT INSTALL ON VIRTUALBOX
+# REDHAT INSTALLATION ON VIRTUALBOX
 
 [Official Installation Tutorial](https://developers.redhat.com/products/rhel/hello-world/#fndtn-virtualbox)
 
