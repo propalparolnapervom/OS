@@ -25,22 +25,26 @@ Define where VirtualBox stores the files that are used as virtual hard disks for
 
 You will need at least 20 GB of available space. 
 
-`File drop-down menu` -> `Preferences...` -> `General` -> 
+*File* drop-down menu -> *Preferences...* -> *General* -> 
 
-`Default Machine Folder:   D:\VM machines\my_rhel_disk_space` 
+```
+Default Machine Folder:   D:\VM machines\my_rhel_disk_space
+```
 
--> `Ok button`
+-> *OK* button
 
 
 **3. Create a new VM**
 
-`New button` -> 
+*New* button -> 
 
-`Name:  my_rhel_6.5`
-`Type:  Linux`
-`Version: Red Hat (64-bit)`
+```
+Name:     my_rhel_6.5
+Type:     Linux`
+Version:  Red Hat (64-bit)
+```
 
--> `Next button` -> 
+-> *Next* button -> 
 
 
 
