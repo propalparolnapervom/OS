@@ -4,7 +4,9 @@
 
 ## REPOSITORIES
 
-**See configured repositories**
+### LIST
+
+**See configured custom repos**
 ```
 yum repolist all
 ```
@@ -13,6 +15,13 @@ yum repolist all
 ```
 supscription-manager repos --list
 ```
+
+**See enabled valid subscription repos**
+```
+subscription-manager repos --list-enabled
+```
+
+### CONFIGURE
 
 **Configure new repository**
 
