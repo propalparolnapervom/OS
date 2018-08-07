@@ -130,9 +130,9 @@ ssh-keygen
 
 ### COPYING THE PUBLIC KEY TO THE SERVER
 
-Copy *public* (**!!!**) key to location you'd like to connect eventually
+Copy *public* (**!!!**) key to **each** *location* and *user* you'd like to connect eventually
 ```
-      #File /home/vagrant/.ssh/authorized_keys will be updated on the remote side
+      #File ~remote_user/.ssh/authorized_keys will be updated on the remote side by default
       
 ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub vagrant@remote-host
 ```
