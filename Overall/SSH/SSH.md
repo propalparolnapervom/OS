@@ -130,7 +130,7 @@ ssh-keygen
 
 ### COPYING THE PUBLIC KEY TO THE SERVER
 
-Copy *public* key (**!!!**) to location you'd like to connect eventually
+Copy *public* (**!!!**) key to location you'd like to connect eventually
 ```
       #File /home/vagrant/.ssh/authorized_keys will be updated on the remote side
       
