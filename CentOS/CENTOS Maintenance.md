@@ -52,7 +52,7 @@ yum search ansible
 
 With specific word not only in the package name, but in its description too
 ```
-yum search jall ansible
+yum search all ansible
 ```
 
 
