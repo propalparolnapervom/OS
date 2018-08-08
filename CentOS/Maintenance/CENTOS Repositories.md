@@ -109,7 +109,7 @@ gpgkey=http://mirror.cisp.com/CentOS/6/os/i386/RPM-GPG-KEY-CentOS-6
 
 Install additional software `createrepo` (needed to create Custom YUM Repository)
 ```
-yum install createrepo
+sudo yum install createrepo
 ```
 
 **Step 2: Create Repository directory**
