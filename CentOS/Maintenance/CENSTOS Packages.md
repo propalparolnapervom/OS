@@ -17,6 +17,13 @@ It reads each *YUM Repository configuration file* to get the info required to do
 sudo yum -y update && sudo yum -y install python2
 ```
 
+## UPDATES
+
+List updated packages
+```
+yum list updates
+```
+
 
 ## SEE PACKAGES UNDER THE REPO
 
