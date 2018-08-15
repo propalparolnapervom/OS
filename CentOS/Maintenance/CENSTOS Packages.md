@@ -19,9 +19,46 @@ sudo yum -y update && sudo yum -y install python2
 
 ## UPDATES
 
-List updated packages
+Find out whether updates exist for already installed packages
 ```
+  #yum list updates <package-name>
+  
 yum list updates
+
+
+  #yum check-update <package-name>
+  
+yum check-update
+```
+
+Update all packages
+```
+sudo yum update
+```
+
+Update only specific package
+```
+sudo yum update ansible
+```
+
+Update specific package to specific version
+```
+  ## Update 'grep' 2.20-3 to 2.20-6
+  
+  
+  # 1) Find a list of all duplicates
+  
+yum --showduplicates list grep      <== pay attention to architecture
+
+
+  # 2) Update to 2.20-6
+  
+sudo yum update-to grep-2.20-6.el6
+```
+
+Update only security packages
+```
+sudo yum update --security
 ```
 
 
@@ -114,6 +151,13 @@ repoquery -a --installed
 ```
 yum info docker
 ```
+
+
+List duplicates
+```
+yum --showduplicates list ansible
+```
+
 
 ## DELETE
 
