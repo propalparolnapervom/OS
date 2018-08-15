@@ -32,6 +32,12 @@ Most common and largest CentOS YUM Repositories:
   
   
 
+## INSTALL REPO
+
+Install EPEL repo
+```
+sudo yum install epel-release
+```
 
 
 ## YUM REPO CONFIG FILE
@@ -196,6 +202,7 @@ sudo yum-config-manager --add-repo http://www.example.com/example.repo
 
 
 ## ENABLE/DISABLE REPO
+
 
 
 ## SEE PACKAGES UNDER THE REPO
