@@ -98,8 +98,8 @@ sudo vi $NEW_REPO_FILE
 
 Insert the desired YUM Repository options to the newly created YUM Repository configuration file and save changes.
 ```
-[examplerepo]
-name=Example Repository
+[xburser_repo]
+name=This is xburser test repo
 baseurl=http://mirror.cisp.com/CentOS/6/os/i386/
 enabled=1
 gpgcheck=1
@@ -173,6 +173,15 @@ List all available repository IDs (already added, enabled/disabled)
 yum repolist all
 ```
 
+List enabled available repository IDs (already added)
+```
+yum repolist enabled
+```
+
+List disabled available repository IDs (already added)
+```
+yum repolist disabled
+```
 
 
 ## ADDING A YUM REPO
@@ -189,6 +198,12 @@ sudo yum-config-manager --add-repo http://www.example.com/example.repo
 ## ENABLE/DISABLE REPO
 
 
+## SEE PACKAGES UNDER THE REPO
+
+List all available packages under a repo called "xbuser_repo"
+```
+yum --disablerepo="*" --enablerepo="xburser_repo" list available
+```
 
 
 
