@@ -18,6 +18,14 @@ sudo yum -y update && sudo yum -y install python2
 ```
 
 
+## SEE PACKAGES UNDER THE REPO
+
+List all available packages under a repo called "xbuser_repo"
+```
+yum --disablerepo="*" --enablerepo="xburser_repo" list available
+```
+
+
 ## SEARCH
 
 **Which package has already installed the file**
