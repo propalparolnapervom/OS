@@ -39,7 +39,7 @@ rpm -qf /usr/bin/cd
 
 **Which package we need to install the file**
 
-For example, which package installs the `ansible`
+For example, which package installs the `ansible` (search only in the available - configured - repositories)
 ```
 yum whatprovides ansible
 
