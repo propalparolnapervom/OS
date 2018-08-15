@@ -4,7 +4,7 @@
 
 ## INSTALL
 
-**Install necessary package**
+**Install the package**
 
 Running this command first checks for existing *YUM Repository configuration files* in `/etc/yum.repos.d/` dir. 
 
@@ -17,7 +17,15 @@ It reads each *YUM Repository configuration file* to get the info required to do
 sudo yum -y update && sudo yum -y install python2
 ```
 
-## UPDATES
+**Re-install the package**
+```
+yum reinstall httpd
+```
+
+
+## UPDATES/DOWNGRADES
+
+**Update**
 
 Find out whether updates exist for already installed packages
 ```
@@ -61,6 +69,13 @@ Update only security packages
 sudo yum update --security
 ```
 
+**Downgrade**
+
+```
+sudo yum downgrade ansible
+```
+
+
 
 ## SEE PACKAGES UNDER THE REPO
 
@@ -98,9 +113,18 @@ yum whatprovides ansible
 
 **Search specific package**
 
-With specific word in the package name
+With specific word in the package name (like %%)
 ```
 yum search ansible
+
+  OR
+
+yum list *ansible*
+```
+
+Whole word in the package name (equals)
+```
+yum list ansible
 ```
 
 With specific word not only in the package name, but in its description too
@@ -108,6 +132,22 @@ With specific word not only in the package name, but in its description too
 yum search all ansible
 ```
 
+## INFO
+
+**See package info**
+
+See information about the package
+```
+yum info htop
+```
+
+
+## DEPENDENCIES
+
+**See package dependencies**
+```
+yum deplist ansible
+```
 
 ## LIST
 
@@ -145,6 +185,16 @@ Via YUM-Utils
 ```
 repoquery -a --installed
 ```
+
+**See available packages**
+
+List packages available for installation from already configured repos
+```
+  #yum list available <package-name>
+  
+yum list available
+```
+
 
 **See package description**
 
