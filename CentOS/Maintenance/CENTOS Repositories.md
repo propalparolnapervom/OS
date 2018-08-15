@@ -86,7 +86,11 @@ Required YUM Repository configuration file options are:
 
 Create a new YUM Repository configuration file with `.repo` extension in `/etc/yum.repos.d/`. 
 ```
-vi /etc/yum.repos.d/example.repo
+export NEW_REPO_FILE=/etc/yum.repos.d/xburser.repo
+sudo touch $NEW_REPO_FILE
+sudo chmod 644 $NEW_REPO_FILE
+sudo ls -la $NEW_REPO_FILE
+sudo vi $NEW_REPO_FILE
 ```
 
 
