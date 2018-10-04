@@ -1,0 +1,47 @@
+# SSH PROXYCOMMAND
+
+
+# OVERALL
+
+[Why](https://heipei.github.io/2015/02/26/SSH-Agent-Forwarding-considered-harmful/) **ProxyCommand** is much better than **Agent Forwarding**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
