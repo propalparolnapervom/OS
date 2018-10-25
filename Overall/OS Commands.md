@@ -11,13 +11,14 @@
 # CODING
 
 
-
+Encode your word with `base64`
 ```
 echo -n 'adminda' | base64
 
   YWRtaW5kYQ==
 ```
 
+Decode your word, encoded with `base64`
 ```
 echo 'YWRtaW5kYQ==' | base64 --decode
 
