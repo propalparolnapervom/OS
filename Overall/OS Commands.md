@@ -8,7 +8,18 @@
 [SystemD Boot Process](https://opensource.com/article/17/2/linux-boot-and-startup)
 
 
-# CODING
+# INPUT/OUTPUT
+
+Replace existing values in the file with new one
+```
+cat <<EOF >  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+```
+
+
+# ENCRYPTING
 
 
 Encode your word with `base64`
