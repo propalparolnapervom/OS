@@ -307,11 +307,19 @@ date "+%D %T"
     09/14/16 07:15:33
     
     
+    
 # DATE: sho some time ago
 
 # 1 month ago
 
 date -v-1m
+
+	OR
+
+date --date="-1 month"
+
+
+
 
 # DATE: add to the file name
 
