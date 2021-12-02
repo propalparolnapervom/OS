@@ -36,15 +36,6 @@ echo 'YWRtaW5kYQ==' | base64 --decode
   adminda
 ```
 
-## PARTITIONS
-
-### Get info
-
-To list existing partitions on Linux
-```
-fdisk -l
-```
-
 
 ## BLOCK DEVICES
 
@@ -120,24 +111,66 @@ blkid -po udev device_name
 
 
 
-## VOLUMS
+## PARTITIONS
 
-### Mount volume
+### Get info
+
+To list existing partitions on Linux
+```
+fdisk -l
+```
+
+
+
+
+## DRIVES
+
+### List
+
+In order to check that your drive partition was correctly mounted, you can use the “lsblk” and inspect the mountpoint column.
+
+```
+lsblk -f
+```
+
+
+### Mount (temp)
 
 To mount drives on Linux
 ```
 mount <device> <dir>
+
+mount /dev/sda1 ~/mountpoint
 ```
+
+
+### Mount (permanent)
 
 Mount all from `/etc/fstab` file:
 ```
-mount 
+mount -a
 ```
 
-### Unmount volume
+Mount only FS from `/etc/fstab` file with type `nfs`:
+```
+mount -a  -t nfs4
+```
 
+### Unmount
 
+To unmount the `/dev/sdc1` device, for example
+```
+umount /dev/sdc1
+```
 
+Check unmounted device
+```
+lsblk /dev/sdc1
+
+  OR 
+  
+findmnt /dev/sdc1
+```
 
 
 
