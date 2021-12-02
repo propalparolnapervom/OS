@@ -36,26 +36,99 @@ echo 'YWRtaW5kYQ==' | base64 --decode
   adminda
 ```
 
-## DRIVES
+## PARTITIONS
 
 ### Get info
 
+To list existing partitions on Linux
+```
+fdisk -l
+```
+
+
+## BLOCK DEVICES
+
+### Get info
+
+#### lsblk
+`lsblk` lists information about all available or the specified
+       block devices. 
+The lsblk command reads the `sysfs` filesystem and
+       `udev` db to gather information. 
+If the `udev` db is not available or
+       `lsblk` is compiled without udev support, then it tries to read
+       `LABELs`, `UUIDs` and filesystem types from the block device. In this
+       case `root` permissions are necessary.
+       
+       
+To display block devices. 
+```
+lsblk
+
+  NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+  nvme0n1     259:2    0   30G  0 disk 
+  └─nvme0n1p1 259:3    0   30G  0 part /
+  nvme1n1     259:0    0  150G  0 disk /opt/co_log
+  nvme2n1     259:1    0   30G  0 disk /opt/co
+```
+To list partitions with filesystems types
+```
+lsblk -f
+
+  NAME        FSTYPE LABEL UUID                                 MOUNTPOINT
+  nvme0n1                                                       
+  └─nvme0n1p1 xfs          f41e390f-835b-4223-a9bb-9b45984ddf8d /
+  nvme1n1     xfs          3750b575-04b1-4429-9514-1e624e2fade1 /opt/co_log
+  nvme2n1     xfs          4d472bc3-9510-4cd0-a84b-1deab218d8ee /opt/co
+```
+
+To display empty block devices as well.  
+```
+lsblk -a 
+```
+
+To print size information in bytes. 
+```
+lsblk -b
+```
+
+To print selected columns of block-devices. 
+```
+lsblk -o SIZE, NAME, MOUNTPOINT 
+```
+
+
+
+
 #### blkid
 The `blkid` command allows you to display information about available block devices.
-
 ```
 blkid
 
-blkid device_name
+  /dev/nvme0n1p1: UUID="f41e390f-835b-4223-a9bb-9b45984ddf8d" TYPE="xfs"
+```
 
-# obtain more detailed information
+Get info regarding specific device name
+```
+blkid device_name
+```
+
+Get more detailed information
+```
 blkid -po udev device_name
 ```
 
 
 
+## VOLUMS
 
 ### Mount volume
+
+To mount drives on Linux
+```
+mount <device> <dir>
+```
+
 Mount all from `/etc/fstab` file:
 ```
 mount 
