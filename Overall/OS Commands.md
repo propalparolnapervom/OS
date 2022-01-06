@@ -121,6 +121,67 @@ fdisk -l
 ```
 
 
+## LVM (Logical Volume Management)
+
+### General
+
+[Introductino to LVM concepts](https://www.digitalocean.com/community/tutorials/an-introduction-to-lvm-concepts-terminology-and-operations)
+[Video: Introduction to LVM](https://youtu.be/dMHFArkANP8?t=161)
+
+### List
+
+Show all PV (`Physical Volumes`)
+
+> **NOTE**: `Physical Volume` is a `physical device`, that already registered by LVM via `pvcreate`
+```
+pvs
+
+  PV           VG     Fmt  Attr PSize     PFree
+  /dev/nvme1n1 vg_log lvm2 a--  <1000.00g    0
+  /dev/nvme2n1 vg_app lvm2 a--    <50.00g    0
+```
+
+Show all VG (`Volume Group`)
+```
+vgs
+
+  VG     #PV #LV #SN Attr   VSize     VFree
+  vg_app   1   1   0 wz--n-   <50.00g    0
+  vg_log   1   1   0 wz--n- <1000.00g    0
+  
+   #OR
+   
+vgs -o +lv_size,lv_name
+
+  VG     #PV #LV #SN Attr   VSize     VFree LSize     LV
+  vg_app   1   1   0 wz--n-   <50.00g    0    <50.00g lv_app
+  vg_log   1   1   0 wz--n- <1000.00g    0  <1000.00g lv_log
+```
+
+Show all LV (`Logical Volume`)
+```
+lvs
+
+  LV     VG     Attr       LSize     Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv_app vg_app -wi-ao----   <50.00g
+  lv_log vg_log -wi-ao---- <1000.00g
+```
+
+Scan the system for `block devices` that LVM can see and manage.
+```
+lvmdiskscan
+
+  /dev/nvme2n1       [      50.00 GiB] LVM physical volume
+  /dev/vg_log/lv_log [   <1000.00 GiB]
+  /dev/nvme1n1       [       1.17 TiB] LVM physical volume
+  /dev/vg_app/lv_app [     <50.00 GiB]
+  /dev/nvme0n1       [      30.00 GiB]
+  /dev/nvme0n1p1     [     <30.00 GiB]
+  2 disks
+  2 partitions
+  0 LVM physical volume whole disks
+  2 LVM physical volumes
+```
 
 
 ## DRIVES
