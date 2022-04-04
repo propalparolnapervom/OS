@@ -69,6 +69,21 @@ df -hT
   tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/0
 ```
 
+Does specified block device have a FS installed on top of it:
+```
+# Does not have
+file -s /dev/xvdf
+
+   /dev/xvdf: data
+
+
+# Does have
+file -s /dev/xvda1
+
+   /dev/xvda1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
+```
+
+
 ## BLOCK DEVICES
 
 ### Get info
