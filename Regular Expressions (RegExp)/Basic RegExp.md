@@ -1,4 +1,6 @@
+# Basic Regular Expressions
 
+[Usage examples](https://kodekloud.com/topic/analyze-text-using-basic-regular-expressions-2/)
 
 ## The line begins with: '^'
 The file
@@ -101,7 +103,9 @@ use // directory
 
 ## Match the previous element 1 or more times: '+'
 
-> **NOTE**: Confusing fact: In basic RegExp some symbols, including '+' has to be escaped by '\' to turn to operator
+> **NOTE**: Confusing fact: In `basic regular expressions` we're looking at here some symbols, including '+' has to be escaped by '\' to turn to operator
+> 
+> Using of `extended regular expressions` eliminates this confusion
 
 ```
 cat test.txt 
@@ -112,12 +116,39 @@ cat test.txt
 0+
 0000000
 
+
+###############
+# Basic RegExp
+###############
+
 # Here '+' is treated as regular symbol, no the operator
 cat test.txt | grep '0+'
 0+
 
 # Here '+' is treated as operator with meaning "1 or more times"
 cat test.txt | grep '0\+'
+0
+00
+0+
+0000000
+
+
+##############################
+# Extended RegExp
+#
+# (see appropriate document,
+# only small example is here)
+##############################
+
+# Use '-E' flag to point to extended RegExp use: to eliminate escaping
+cat test.txt | grep -E '0+'
+0
+00
+0+
+0000000
+
+# Use `egrep` instead of `grep` tool, to point to extended RegExp use: to eliminate escaping
+cat test.txt | egrep '0+'
 0
 00
 0+
