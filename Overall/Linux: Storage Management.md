@@ -17,7 +17,7 @@ lsblk
   nvme2n1     259:1    0   30G  0 disk /opt/co
 ```
 
-To list partitions with filesystems types
+To list `partitions` with `filesystems` types
 ```
 lsblk -f
 
@@ -47,6 +47,7 @@ lsblk -o SIZE, NAME, MOUNTPOINT
 
 
 #### blkid
+
 The `blkid` command allows you to display information about available block devices.
 ```
 blkid
@@ -54,14 +55,14 @@ blkid
   /dev/nvme0n1p1: UUID="f41e390f-835b-4223-a9bb-9b45984ddf8d" TYPE="xfs"
 ```
 
-Get info regarding specific device name
+Get info regarding specific block device (`partition`, for example)
 ```
-blkid device_name
+blkid /dev/vdb1
 ```
 
 Get more detailed information
 ```
-blkid -po udev device_name
+blkid -po udev /dev/vdb1
 ```
 
 
@@ -274,6 +275,8 @@ tune2fs
 
 ## MOUNT (DRIVES)
 
+Once `FS` was installed on top of the `partition`, it has to be mounted to some directory in order to be available for using.
+
 ### List
 
 List `disks` with:
@@ -283,6 +286,16 @@ List `disks` with:
 ```
 # Correspoinding `partition` should have a mounted `dir` listed under MOUNTPOINT tab
 lsblk -f
+
+   # OR
+
+# Show currently mounted: all (including virtual mount points, existing in a memory only - like `proc`)
+findmnt
+
+   # OR
+
+# Show currenlty mounted: only FS `xfs` and `ext4` mounted to the block devices
+findmnt -t xfs,ext4
 ```
 
 
@@ -291,15 +304,21 @@ lsblk -f
 Temporary (till reboot) mount `FS`, that is installed on top of specified `partition`, to specified `dir`
 ```
 # Mount
-mount /dev/vdb1 /mnt/
+mount /dev/vdb1 /mnt
 
-# Check result 
-# (correspoinding `partition` should have a mounted `dir` listed under MOUNTPOINT tab)
-lsblk
+# Mount, with RO access
+mount -o ro /dev/vdb1 /mnt
+
+# Mount, with RO access, no ability to execute programs, no root run
+mount -o ro,noexec,nosuid /dev/vdb1 /mnt
 ```
 
 
 ### Mount (permanent)
+
+> **NOTE**: Every time you update `/etc/fstab` file, run following to apply those changes:
+> 
+>                         `systemctl daemon-reload`
 
 Mount all from `/etc/fstab` file:
 ```
@@ -313,7 +332,7 @@ mount -a  -t nfs4
 
 ### Unmount
 
-To unmount the `/dev/sdc1` device, for example
+To unmount `FS`, that is built on top of specified `partition`
 ```
 umount /dev/sdc1
 ```
