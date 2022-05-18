@@ -86,6 +86,8 @@ file -s /dev/xvda1
 
 ## BLOCK DEVICES
 
+> **NOTE**: In this context, `block device` may be a `disk` or its `partition`
+
 ### Get info
 
 #### lsblk
@@ -104,8 +106,8 @@ To display block devices.
 lsblk
 
   NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-  nvme0n1     259:2    0   30G  0 disk 
-  └─nvme0n1p1 259:3    0   30G  0 part /
+  nvme0n1     259:2    0   30G  0 disk                    <== This is a `disk`
+  └─nvme0n1p1 259:3    0   30G  0 part /                  <== This is a `partition` of that disk
   nvme1n1     259:0    0  150G  0 disk /opt/co_log
   nvme2n1     259:1    0   30G  0 disk /opt/co
 ```
@@ -162,9 +164,26 @@ blkid -po udev device_name
 
 ### Get info
 
-To list existing partitions on Linux
+To list all existing:
+- `disks`;
+- its `partitions` (if any)
 ```
 fdisk -l
+```
+
+Show info regarding `disk` and its `partition` (if present)
+```
+fdisk -l /dev/vda
+
+Disk /dev/vda: 11 GiB, 11811160064 bytes, 23068672 sectors    <== Info regarding `disk`
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xef431952
+
+Device     Boot Start      End  Sectors Size Id Type          <== Info regarding `partition` of the `disk` (if the partition present)
+/dev/vda1  *     2048 20971519 20969472  10G 83 Linux
 ```
 
 
