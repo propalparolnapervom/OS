@@ -48,6 +48,65 @@ file -s /dev/xvda1
 ```
 
 
+All properties of FS
+```
+# ext4
+tune2fs -l /dev/sdb2
+```
+
+### Create
+
+Once `partition` is created, a `file system` has to be created on top of that
+
+
+#### With Help Of `mkfs`
+
+Create specified `FS` on top of specified `partition`
+```
+##########
+# FS: xfs
+##########
+# Create FS on top of specified `partition`, default configuration
+mkfs.xfs /dev/vdb1
+
+# Create FS on top of specified `partition`, with specified number of `inodes`
+mkfs.xfs -i 512 /dev/vdb1
+
+###########
+# FS: ext4
+###########
+# Create FS on top of specified `partition`, default configuration
+mkfs.ext4 /dev/vdb1
+
+# Create FS on top of specified `partition`, with specified number of `inodes`
+mkfs.xfs -N 500000 /dev/vdb1
+
+
+```
+
+View available options
+```
+# For xfs
+mkfs.xfs
+man mkfs.xfs
+
+# For ext4
+man mkfs.ext4
+```
+
+### Modify
+
+Modify properties of already existing FS
+```
+# xfs
+xfs_admin
+
+# ext4
+tune2fs
+```
+
+
+
 ## BLOCK DEVICES
 
 > **NOTE**: In this context, `block device` may be a `disk` or its `partition`
@@ -171,7 +230,7 @@ vda1 253:1    0  10G  0 part /
 
 ### Create: Not Permanent (till reboot)
 
-#### With Help of `cfdisk`
+#### With Help Of `cfdisk`
 
 ```
 # Start partition program for a disk with necessary partition
@@ -189,7 +248,7 @@ lsblk
 ```
 
 
-#### With Help of `fdisk`
+#### With Help Of `fdisk`
 
 ```
 fdisk /dev/vdb
