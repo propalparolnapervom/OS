@@ -1,128 +1,10 @@
-
-
-## FILE SYSTEM
-
-### List
-
-Which FS is in use:
-```
-lsblk -f
-
-  NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT
-  nvme0n1
-  └─nvme0n1p1     xfs               ef6ba050-6cdc-416a-9380-c14304d0d206   /
-  nvme1n1         LVM2_member       OkcS2c-AdMq-OK5W-5VLB-9CX8-UifB-7ty1Zh
-  └─vg_log-lv_log xfs               37a148e9-71c1-49d2-b569-2673c6529fe7   /opt/csmarketslive_log
-  nvme2n1         LVM2_member       C3Ju0e-qq9c-gxFE-gIbQ-SvG1-tpVE-yHNuUK
-  └─vg_app-lv_app xfs               f09e1250-fea4-4ecd-a3b2-5b2604224ace   /opt/csmarketslive
-
-   # OR
-   
-df -hT
-
-  Filesystem                Type      Size  Used Avail Use% Mounted on
-  /dev/nvme0n1p1            xfs        30G   21G  9.6G  69% /
-  devtmpfs                  devtmpfs   16G     0   16G   0% /dev
-  tmpfs                     tmpfs      16G  8.0K   16G   1% /dev/shm
-  tmpfs                     tmpfs      16G  836K   16G   1% /run
-  tmpfs                     tmpfs      16G     0   16G   0% /sys/fs/cgroup
-  /dev/mapper/vg_app-lv_app xfs        50G  4.8G   46G  10% /opt/csmarketslive
-  /dev/mapper/vg_log-lv_log xfs      1000G  932G   69G  94% /opt/csmarketslive_log
-  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/555
-  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/1022
-  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/0
-```
-
-Does specified block device have a FS installed on top of it:
-```
-# Does not have
-file -s /dev/xvdf
-
-   /dev/xvdf: data
-
-
-# Does have
-file -s /dev/xvda1
-
-   /dev/xvda1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
-```
-
-
-All properties of FS
-```
-# ext4
-tune2fs -l /dev/sdb2
-```
-
-### Create
-
-Once `partition` is created, a `file system` has to be created on top of that
-
-
-#### With Help Of `mkfs`
-
-Create specified `FS` on top of specified `partition`
-```
-##########
-# FS: xfs
-##########
-# Create FS on top of specified `partition`, default configuration
-mkfs.xfs /dev/vdb1
-
-# Create FS on top of specified `partition`, with specified number of `inodes`
-mkfs.xfs -i 512 /dev/vdb1
-
-###########
-# FS: ext4
-###########
-# Create FS on top of specified `partition`, default configuration
-mkfs.ext4 /dev/vdb1
-
-# Create FS on top of specified `partition`, with specified number of `inodes`
-mkfs.xfs -N 500000 /dev/vdb1
-
-
-```
-
-View available options
-```
-# For xfs
-mkfs.xfs
-man mkfs.xfs
-
-# For ext4
-man mkfs.ext4
-```
-
-### Modify
-
-Modify properties of already existing FS
-```
-# xfs
-xfs_admin
-
-# ext4
-tune2fs
-```
-
-
-
 ## BLOCK DEVICES
 
 > **NOTE**: In this context, `block device` may be a `disk` or its `partition`
 
-### Get info
+### List
 
 #### lsblk
-`lsblk` lists information about all available or the specified
-       block devices. 
-The lsblk command reads the `sysfs` filesystem and
-       `udev` db to gather information. 
-If the `udev` db is not available or
-       `lsblk` is compiled without udev support, then it tries to read
-       `LABELs`, `UUIDs` and filesystem types from the block device. In this
-       case `root` permissions are necessary.
-       
        
 To display block devices. 
 ```
@@ -134,6 +16,7 @@ lsblk
   nvme1n1     259:0    0  150G  0 disk /opt/co_log
   nvme2n1     259:1    0   30G  0 disk /opt/co
 ```
+
 To list partitions with filesystems types
 ```
 lsblk -f
@@ -279,6 +162,172 @@ cfdisk /dev/vdb
 # Chose `Linux swap` from the menu
 
 ```
+
+
+## FILE SYSTEM
+
+### List
+
+Which FS is in use:
+```
+lsblk -f
+
+  NAME            FSTYPE      LABEL UUID                                   MOUNTPOINT
+  nvme0n1
+  └─nvme0n1p1     xfs               ef6ba050-6cdc-416a-9380-c14304d0d206   /
+  nvme1n1         LVM2_member       OkcS2c-AdMq-OK5W-5VLB-9CX8-UifB-7ty1Zh
+  └─vg_log-lv_log xfs               37a148e9-71c1-49d2-b569-2673c6529fe7   /opt/csmarketslive_log
+  nvme2n1         LVM2_member       C3Ju0e-qq9c-gxFE-gIbQ-SvG1-tpVE-yHNuUK
+  └─vg_app-lv_app xfs               f09e1250-fea4-4ecd-a3b2-5b2604224ace   /opt/csmarketslive
+
+   # OR
+   
+df -hT
+
+  Filesystem                Type      Size  Used Avail Use% Mounted on
+  /dev/nvme0n1p1            xfs        30G   21G  9.6G  69% /
+  devtmpfs                  devtmpfs   16G     0   16G   0% /dev
+  tmpfs                     tmpfs      16G  8.0K   16G   1% /dev/shm
+  tmpfs                     tmpfs      16G  836K   16G   1% /run
+  tmpfs                     tmpfs      16G     0   16G   0% /sys/fs/cgroup
+  /dev/mapper/vg_app-lv_app xfs        50G  4.8G   46G  10% /opt/csmarketslive
+  /dev/mapper/vg_log-lv_log xfs      1000G  932G   69G  94% /opt/csmarketslive_log
+  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/555
+  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/1022
+  tmpfs                     tmpfs     3.1G     0  3.1G   0% /run/user/0
+```
+
+Does specified block device have a FS installed on top of it:
+```
+# Does not have
+file -s /dev/xvdf
+
+   /dev/xvdf: data
+
+
+# Does have
+file -s /dev/xvda1
+
+   /dev/xvda1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
+```
+
+
+All properties of FS
+```
+# ext4
+tune2fs -l /dev/sdb2
+```
+
+
+### Create
+
+Once `partition` is created, a `file system` has to be created on top of that
+
+
+#### With Help Of `mkfs`
+
+Create specified `FS` on top of specified `partition`
+```
+##########
+# FS: xfs
+##########
+# Create FS on top of specified `partition`, default configuration
+mkfs.xfs /dev/vdb1
+
+# Create FS on top of specified `partition`, with specified number of `inodes`
+mkfs.xfs -i 512 /dev/vdb1
+
+###########
+# FS: ext4
+###########
+# Create FS on top of specified `partition`, default configuration
+mkfs.ext4 /dev/vdb1
+
+# Create FS on top of specified `partition`, with specified number of `inodes`
+mkfs.xfs -N 500000 /dev/vdb1
+
+
+```
+
+View available options
+```
+# For xfs
+mkfs.xfs
+man mkfs.xfs
+
+# For ext4
+man mkfs.ext4
+```
+
+### Modify
+
+Modify properties of already existing FS
+```
+# xfs
+xfs_admin
+
+# ext4
+tune2fs
+```
+
+
+
+## MOUNT (DRIVES)
+
+### List
+
+List `disks` with:
+- its `partitions` (if any);
+- its `FS` (if any);
+- mount points for `FS` (if any).
+```
+# Correspoinding `partition` should have a mounted `dir` listed under MOUNTPOINT tab
+lsblk -f
+```
+
+
+### Mount (temp)
+
+Temporary (till reboot) mount `FS`, that is installed on top of specified `partition`, to specified `dir`
+```
+# Mount
+mount /dev/vdb1 /mnt/
+
+# Check result 
+# (correspoinding `partition` should have a mounted `dir` listed under MOUNTPOINT tab)
+lsblk
+```
+
+
+### Mount (permanent)
+
+Mount all from `/etc/fstab` file:
+```
+mount -a
+```
+
+Mount only FS from `/etc/fstab` file with type `nfs`:
+```
+mount -a  -t nfs4
+```
+
+### Unmount
+
+To unmount the `/dev/sdc1` device, for example
+```
+umount /dev/sdc1
+```
+
+Check unmounted device
+```
+lsblk /dev/sdc1
+
+  OR 
+  
+findmnt /dev/sdc1
+```
+
+
 
 
 
@@ -600,56 +649,6 @@ df -h
   ...
 ```
 
-
-
-## DRIVES
-
-### List
-
-In order to check that your drive partition was correctly mounted, you can use the “lsblk” and inspect the mountpoint column.
-
-```
-lsblk -f
-```
-
-
-### Mount (temp)
-
-To mount drives on Linux
-```
-mount <device> <dir>
-
-mount /dev/sda1 ~/mountpoint
-```
-
-
-### Mount (permanent)
-
-Mount all from `/etc/fstab` file:
-```
-mount -a
-```
-
-Mount only FS from `/etc/fstab` file with type `nfs`:
-```
-mount -a  -t nfs4
-```
-
-### Unmount
-
-To unmount the `/dev/sdc1` device, for example
-```
-umount /dev/sdc1
-```
-
-Check unmounted device
-```
-lsblk /dev/sdc1
-
-  OR 
-  
-findmnt /dev/sdc1
-```
 
 
 
