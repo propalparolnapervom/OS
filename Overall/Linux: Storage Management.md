@@ -255,10 +255,25 @@ file /swapfile
 ```
 
 
+### Enable
 
-Format `partition` as a `swap` space
+> **NOTE**: This is till the reboot.
+
+> **NOTE**: As a prerequisite, the `partition` should be of type `swap` (via `cfdisk /dev/vdb`, for example)
+
+Make specified `partition` to be used as a `swap` space
 ```
-mkswap /dev/vdb3
+# Format necessary partition
+mkswap /dev/vdb2
+
+# Tell Linux to start using the partition as a swap
+swapon /dev/vdb2
+
+# Check the partition is in the list of available swap resources (the one with `partition` type)
+swapon --show
+NAME      TYPE      SIZE USED PRIO
+/swapfile file        2G 8.3M   -2
+/dev/vdb2 partition  21M   0B   -3
 ```
 
 
