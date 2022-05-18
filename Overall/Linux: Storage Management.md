@@ -254,8 +254,53 @@ file /swapfile
 /swapfile: Linux/i386 swap file (new style), version 1 (4K pages), size 524287 pages, no label, UUID=124f5779-4db7-4346-8169-aab7c0b700cf
 ```
 
+### File As Swap
 
-### Enable
+### Create New Swap File
+
+Create 1Gb swap file
+```
+# Create a file, full of 0, in 1024 blocks, 1M each
+sudo dd if=/dev/zero of=/swapfile2 bs=1M count=1024
+
+# Setup the file as a swap file
+sudo mkswap /swapfile2
+
+# Set up permissions
+chmod 600 /swapfile2
+
+# Enable swaping
+sudo swapon /swapfile2
+
+# Show results
+swapon --show
+```
+
+### Extend Already Existing Swap File
+
+Add 1G to the already existing `/swapfile` swap file
+```
+# Add additional 0-s in 1024 blocks, 1M each
+sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 oflag=append conv=notrunc
+
+# Disable the swap file
+sudo swapoff /swapfile
+
+# Setup the file as a swap file again
+sudo mkswap /swapfile
+
+# Enable again swaping
+sudo swapon /swapfile
+
+# Check result
+swapon --show
+```
+
+
+
+### Partition As Swap
+
+#### Enable
 
 > **NOTE**: This is till the reboot.
 
@@ -276,6 +321,15 @@ NAME      TYPE      SIZE USED PRIO
 /dev/vdb2 partition  21M   0B   -3
 ```
 
+#### Disable
+
+```
+# Tell Linux to stop using the partition as a swap
+swapoff /dev/vdb2
+
+# Check the partition is in the list of available swap resources (the one with `partition` type)
+swapon --show
+```
 
 
 
