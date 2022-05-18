@@ -462,6 +462,12 @@ swapon --show
 
 ## LVM (Logical Volume Management)
 
+Wether we have ...
+- free space on different portions on one disk;
+- multiple disks;
+
+... that we want to combine and represent it all to OS as 1 continious partition - `LVM` let us do this.
+
 ### General
 
 [Introductino to LVM concepts](https://www.digitalocean.com/community/tutorials/an-introduction-to-lvm-concepts-terminology-and-operations)
@@ -469,9 +475,9 @@ swapon --show
 
 ### List
 
-Show all PV (`Physical Volumes`)
+List all PV (`Physical Volumes`), already registered by LVM via `pvcreate <block-device>`
 
-> **NOTE**: `Physical Volume` is a `physical device`, that already registered by LVM via `pvcreate`
+> **NOTE**: `Physical Volume` is a `physical device` (`disk` or `partition`), that already registered by LVM via `pvcreate`
 ```
 pvs
 
@@ -480,7 +486,7 @@ pvs
   /dev/nvme2n1 vg_app lvm2 a--    <50.00g    0
 ```
 
-Show all VG (`Volume Group`)
+List all VG (`Volume Group`)
 ```
 vgs
 
@@ -501,7 +507,7 @@ vgs -o +lv_size,lv_name
 vgdisplay <VG_NAME>
 ```
 
-Show all LV (`Logical Volume`)
+List all LV (`Logical Volume`)
 ```
 lvs
 
@@ -510,7 +516,7 @@ lvs
   lv_log vg_log -wi-ao---- <1000.00g
 ```
 
-Scan the system for `block devices` that LVM can see and manage.
+Scan the system for `block devices` (which are `disk` or its `partition`) that LVM can see and manage.
 ```
 lvmdiskscan
 
@@ -525,8 +531,83 @@ lvmdiskscan
   0 LVM physical volume whole disks
   2 LVM physical volumes
 ```
+### Show
 
-### Resize
+Show information regarding all `lv`
+```
+lvdisplay
+```
+
+### Create
+
+#### PV (Physical Volume)
+
+> **NOTE**: The `pv` tells us, where we can store data.
+
+Add new `block devices` (`disks` or `partitions`) as `pv` (`pshysical volumes`) to the LVM
+```
+pvcreate /dev/sdc
+```
+
+Check result (new `pv` should appear in the list)
+```
+pvs
+```
+
+#### VG (Volume Group)
+
+> **NOTE**: The `vg` tells us, how to use storage capacity of those `pv` included.
+
+Add already created `pv` to the new `vg`
+```
+# vgcreate <VG_NAME> <BLOCK-DEVICE> [<BLOCK-DEVICE> <BLOCK-DEVICE> <BLOCK-DEVICE> ...]
+
+# Create VG, that consist of 2 PV (for example, 5Gb each)
+vgcreate my_volume /dev/sdc /dev/sdd
+```
+
+See result 
+> **NOTE**: The size of the `vg` is the sum of all `pv` included
+```
+vgs
+```
+
+#### LV (Logical Volume)
+
+> **NOTE**: The `vg` is like a single `disk`, and `lv` is like its `partition`
+
+```
+lvcreate --size <SIZE-OF-"PARTITION"> --name <RANDOM-NAME-OF-"PARTITION"> <EXISTING-VG-NAME>
+lvcreate --size 2G --name partition1 my_volume
+```
+
+Check result
+```
+# VG (disk) now shows how many LV (partitions) are created, together with free space reduced by the size of new LV
+vgs
+
+# The list of LV
+lvs
+```
+
+#### FS (File System)
+
+Now we have `partitions` (`lv`), so we have to install FS on top of them.
+
+> **NOTE**: Use `lvdisplay` command to find `block device` name that should be used for `lv` (as not exact `partition` is will be in use)
+
+```
+# Find `block device` name for necessary `lv` (aka `partition`)
+lvdisplay
+
+# Create FS xfs
+mkfs.xfs /dev/my_volume/partition1
+
+```
+
+
+
+### Resize: AWS EBS edition
 
 [Docs: How to resize on AWS EBS volume](https://aws.amazon.com/premiumsupport/knowledge-center/create-lv-on-ebs-volume/)
 
