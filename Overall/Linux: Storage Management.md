@@ -126,16 +126,27 @@ blkid -po udev device_name
 
 ## PARTITIONS
 
-### Get info
+### List
 
 To list all existing:
 - `disks`;
 - its `partitions` (if any)
 ```
 fdisk -l
+
+  # OR
+
+lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda    253:0    0  11G  0 disk                <== Disk
+└─vda1 253:1    0  10G  0 part /              <== Partition of the disk
+vdb    253:16   0   1G  0 disk 
+vdc    253:32   0   1G  0 disk 
+vdd    253:48   0   1G  0 disk 
+vde    253:64   0   1G  0 disk
 ```
 
-Show info regarding `disk` and its `partition` (if present)
+Show info regarding specific `disk` and its `partition` (if present)
 ```
 fdisk -l /dev/vda
 
@@ -148,7 +159,109 @@ Disk identifier: 0xef431952
 
 Device     Boot Start      End  Sectors Size Id Type          <== Info regarding `partition` of the `disk` (if the partition present)
 /dev/vda1  *     2048 20971519 20969472  10G 83 Linux
+
+
+  # OR
+
+lsblk -l /dev/vda
+NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda  253:0    0  11G  0 disk 
+vda1 253:1    0  10G  0 part /
 ```
+
+### Create: Not Permanent (till reboot)
+
+#### With Help of `cfdisk`
+
+```
+# Start partition program for a disk with necessary partition
+cfdisk /dev/vdb
+
+# Select label type
+#    - gpt - is modern one, choose it
+#    - dos - is old one, that was used decades before to make partition for `MBR (master boot)`
+
+# Further it's all clear
+
+
+# Check result
+lsblk
+```
+
+
+#### With Help of `fdisk`
+
+```
+fdisk /dev/vdb
+```
+
+### Delete
+
+Delete specific `partition` of the `disk`
+```
+# Start partition program for a disk with necessary partition
+cfdisk /dev/vdb
+
+# Check result
+lsblk
+```
+
+### Format
+
+Format specified `partition` of the `disk` as `swap`, for example
+```
+# Start partition program for a disk with necessary partition
+cfdisk /dev/vdb
+
+# Chose specified partiton
+
+# Chose `type` menu
+
+# Chose `Linux swap` from the menu
+
+```
+
+
+
+## SWAP
+
+> NOTE: If `partition` is used for a `swap`, it must have appropriate type
+
+### List
+
+Show `swap` usage
+```
+swapon --show
+NAME      TYPE SIZE USED PRIO
+/swapfile file   2G 8.3M   -2
+
+  # OR
+
+free
+              total        used        free      shared  buff/cache   available
+Mem:         992248      194300      234956        3632      562992      645584
+Swap:       2097148        8448     2088700
+```
+
+Show, which swap file is in use (if any)
+```
+# The swap file is the one that has `file` type
+swapon --show
+NAME      TYPE SIZE USED PRIO
+/swapfile file   2G 8.3M   -2
+
+file /swapfile
+/swapfile: Linux/i386 swap file (new style), version 1 (4K pages), size 524287 pages, no label, UUID=124f5779-4db7-4346-8169-aab7c0b700cf
+```
+
+
+
+Format `partition` as a `swap` space
+```
+mkswap /dev/vdb3
+```
+
+
 
 
 ## LVM (Logical Volume Management)
